@@ -1,0 +1,28 @@
+{
+  "main": [
+    {
+      "name": "1",
+      "email": "1@gamil.com",
+      "password": "12",
+      "id": 1
+    },
+    {
+      "name": "1",
+      "email": "2121@gamil.com",
+      "password": "12",
+      "id": 2
+    },
+    {
+      "name": "asdf",
+      "email": "asd@gmail.com",
+      "password": "",
+      "id": 3
+    },
+    {
+      "name": "asdf",
+      "email": "asd@gmail.com",
+      "password": "",
+      "id": 4
+    }
+  ]
+}
