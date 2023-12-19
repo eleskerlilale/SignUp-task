@@ -1,6 +1,7 @@
 const form=document.querySelector(".category-form")
 const nameinput=document.querySelector("#name")
 const email=document.querySelector("#email")
+const passwords=document.querySelectorAll("input[type='password']")
 const password1=document.querySelector("#password1")
 const password2=document.querySelector("#password2")
 const submit=document.querySelector("#submit")
@@ -12,6 +13,25 @@ let obj={
     email:"",
     password:""
 }
+for(let i in input){
+    input[i].addEventListener("input", () => {
+        if(i==0){
+            symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
+            symbols[i].style.color='rgb(55, 255, 0)'
+        }
+        else if(i==1){
+            
+            if(input[i].value.endsWith('@gmail.com')){
+                symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
+                symbols[i].style.color='rgb(55, 255, 0)'
+            }else{
+                symbols[i].innerHTML=`<p>Include @gmail.com at the end</p>`
+                symbols[i].style.color='gray'
+            }
+        }
+    })
+}
+
 for (let i=0; i< input.length; i++){
     input[i].addEventListener("blur" ,() => {
         if(input[i].value==''){
@@ -33,9 +53,23 @@ for (let i=0; i< input.length; i++){
         }
     })
 }
+
+for (let i in hidden){
+    hidden[i].addEventListener("click" ,() => {
+        if(passwords[i].type==='text'){
+            passwords[i].type='password'
+            hidden[i].innerHTML=`<i class="bi bi-eye-slash"></i>`
+        }else{
+            passwords[i].type='text'
+            hidden[i].innerHTML=`<i class="bi bi-eye"></i>`
+        }
+    })
+}
+
 const arr=[]
 submit.addEventListener('click', (e) => {
     e.preventDefault()
     arr.push(obj)
     console.log(arr)
 })
+
