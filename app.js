@@ -14,50 +14,28 @@ let obj={
 for(let i=0 ; i<input.length ; i++){
     input[i].addEventListener("input", () => {
         if(input[i].value.trim()!=''){
-            if(i==0){
-                input[i].style.outlineColor='green'
-                symbols[0].innerHTML=`<i class="bi bi-plus-circle"></i>`
-                symbols[0].style.color='rgb(55, 255, 0)'
-            }
-            else if(i==1){
-                if(input[i].value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-                    input[i].style.outlineColor='green'
-                    symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
-                    symbols[i].style.color='rgb(55, 255, 0)'
-                }else{
+            input[i].style.outlineColor='green'
+            symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
+            symbols[i].style.color='rgb(55, 255, 0)'
+            if(i==1){
+                if(!input[i].value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){               
                     input[i].style.outlineColor='red'
                     symbols[i].innerHTML=`<p>email is not valid</p>`
                     symbols[i].style.color='gray'
                 }
             }else if(i==2){
-                if(input[i].value.match( /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/)){
-                    symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
-                    symbols[i].style.color='rgb(55, 255, 0)'
-                    input[i].style.outlineColor='rgb(55, 255, 0)'
-                    return true
-                }else{
-                    console.log(input[i].value)
+                if(!input[i].value.match( /^(?=.*[\d])(?=.*[!@#$%^&*])[\w!@#$%^&*]{6,16}$/)){
                     symbols[i].innerHTML=`<p>Password must be at least 8 characters long, consisting of symbols, upper and lower case letters and a number</p>`
                     symbols[i].style.color="gray"
-                    return false
                 }
-            } else if(i==3){
+            }else if(i==3){
                 if(password1.value==password2.value){
-                        obj.password=input[2].value
-                        symbols[i].innerHTML=`<i class="bi bi-plus-circle"></i>`
-                        symbols[i].style.color='rgb(55, 255, 0)'
-                        input[i].style.outlineColor='rgb(55, 255, 0)'
-                    }else{
-                        symbols[3].innerHTML=`<i class="bi bi-x-circle"></i><p>Password not confirmed</p>`
-                        symbols[3].style.color='red'
-                        console.log(symbols[3])
-                    }
+                    obj.password=input[2].value
+                }else{
+                    symbols[3].innerHTML=`<i class="bi bi-x-circle"></i><p>Password not confirmed</p>`
+                    symbols[3].style.color='red'
+                }
             }
-        }
-        else{
-            input[i].style.outlineColor='red'
-            symbols[i].innerHTML=`<i class="bi bi-x-circle"></i>`
-            symbols[i].style.color='red'
         }
     })
 }
@@ -72,11 +50,9 @@ for (let i=0; i< input.length; i++){
             obj.email=input[1].value
             if(password1.value==password2.value){
                 obj.password=input[2].value
-                console.log(symbols[3])
             }else{
                 symbols[3].innerHTML=`<i class="bi bi-x-circle"></i><p>Password not confirmed</p>`
                 symbols[3].style.color='red'
-                console.log(symbols[3])
             }
         }
     })
@@ -96,15 +72,14 @@ for (let i=0; i<hidden.length; i++){
 
 submit.addEventListener('click', (e) => {
     e.preventDefault()
-    input.forEach(i =>{
-        if(i.value==''){
-            alert("melumatlar dogru deyil")
-        }
-    })
+    if(obj.name=='' && obj.email=='' && obj.password==''){
+        alert("melumat dogru deyil")
+    }
+   else{
     axios.get("http://localhost:3000/main")
     .then(res => res.data)
     .then(data => {
-        if(data.length ==0){
+        if(data.length ==0 ){
             axios.post("http://localhost:3000/main", obj)
         }else{
             data.forEach(element => {
@@ -113,9 +88,10 @@ submit.addEventListener('click', (e) => {
                 }else{
                     axios.post("http://localhost:3000/main", obj)
                     alert("ugurlu")
-                }
+                }                
             })
         }
     })
+   }
 })
 
